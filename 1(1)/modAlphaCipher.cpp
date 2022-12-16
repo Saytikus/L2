@@ -40,10 +40,10 @@ inline wstring modAlphaCipher::getValidKey(const wstring& s) {
 		throw cipher_error("Empty key");
 	wstring output;
 	for (wchar_t c : s) {
-		if (c >= L'¿' && c <= L'ﬂ') {
+		if (c >= L'–ê' && c <= L'–Ø') {
 			output += c;
 		}
-		else if (c >= L'‡' && c <= L'ˇ') {
+		else if (c >= L'–∞' && c <= L'—è') {
 			output += towupper(c);
 		}
 		else
@@ -56,10 +56,10 @@ inline wstring modAlphaCipher::getValidOpenText(const wstring& s) {
 		throw cipher_error("Empty Open Text");
 	wstring output;
 	for (wchar_t c : s) {
-		if (c >= L'¿' && c <= L'ﬂ') {
+		if (c >= L'–ê' && c <= L'–Ø') {
 			output += c;
 		}
-		else if (c >= L'‡' && c <= L'ˇ') {
+		else if (c >= L'–∞' && c <= L'—è') {
 			output += towupper(c);
 		}
 		else
@@ -72,11 +72,11 @@ inline wstring modAlphaCipher::getValidCipherText(const wstring& s) {
 		throw cipher_error("Empty Cipher Text");
 	wstring output;
 	for (wchar_t c : s) {
-		if (c >= L'¿' && c <= L'ﬂ') {
+		if (c >= L'–ê' && c <= L'–Ø') {
 			output += c;
 		}
 		else
-			throw cipher_error("Invalid Open Text");
+			throw cipher_error("Invalid Cipher Text");
 	}
 	return output;
 }

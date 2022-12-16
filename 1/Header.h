@@ -3,7 +3,7 @@
 #include <string>
 #include <ctype.h>
 using namespace std;
-class Header {
+class Methods {
 public:
 	string Encrypt(string str, const int key);
 	string Decrypt(string str, const int key);

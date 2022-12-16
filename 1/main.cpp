@@ -1,38 +1,26 @@
 #include "Header.h"
 using namespace std;
-	void TryCatch_My(const string & msg, const int & key, const bool DeleteEncMsg = false, const bool InvalidKeyDec = false, const bool HugeKeyDec = false) {
+	void TestTryCatch(const string & text, const int & key) {
 		try {
-			int InvalidKey = 0;
-			Header head;
-			string EncryptedMsg = head.Encrypt(msg, key);
-			if (DeleteEncMsg)
-				EncryptedMsg = "";
-			string DecryptedMsg;
-			if (InvalidKeyDec)
-				DecryptedMsg = head.Decrypt(EncryptedMsg, InvalidKey);
-			else if (HugeKeyDec) {
-				InvalidKey = 999999;
-				DecryptedMsg = head.Decrypt(EncryptedMsg, InvalidKey);
-			}
-			else
-				DecryptedMsg = head.Decrypt(EncryptedMsg, key);
-			cout << msg << endl << EncryptedMsg << endl << DecryptedMsg << endl;
+			Methods head;
+			string encrypted_text = head.Encrypt(text, key);
+			string decrypted_text = head.Decrypt(encrypted_text, key);
+			cout << text << endl << encrypted_text << endl << decrypted_text << endl;
 		}
 		catch (const Mymethods_error& er) {
-			cerr << "Error: " << er.what() << "\n\n";
+			cerr << "Error: " << er.what() << endl;
 		}
 }
 
 int main() {
-	setlocale(LC_ALL, "RU");
-
-	TryCatch_My("", 4);								// Ïóñòàÿ ñòðîêà
-	TryCatch_My("!@#$12345!6789x", 4);				// Íåêîððåêòíûå ñèìâîëû â ñòðîêå
-	TryCatch_My("123456789x", 1);					// Ñëèøêîì ìàëåíüêèé êëþ÷
-	TryCatch_My("123", 4);							// Ìàëåíüêàÿ ñòðîêà ïî ñðàâíåíèþ ñ êëþ÷åì
-	TryCatch_My("123456789x", 4, true);				// Ïóñòàÿ ñòðîêà â ðàñøèôðîâàíèè
-	TryCatch_My("123456789x", 4, false, true);		// Ìàëåíüêèé êëþ÷ â ðàñøèôðîâàíèè
-	TryCatch_My("123", 3, false, false, true );		// Ìàëåíüêàÿ ñòðîêà ïî ñðàâíåíèþ ñ êëþ÷åì â ðàñøèôðîâàíèè
-
+	TestTryCatch("123456789X", 3);					
+	TestTryCatch("JOHNTRAVOLTA", 8);						// Ð‘Ð»Ð¾Ðº Ñ Ð²ÐµÑ€Ð½Ñ‹Ð¼Ð¸ ÑÑ‚Ñ€Ð¾ÐºÐ°Ð¼Ð¸ Ð¸ ÐºÐ»ÑŽÑ‡Ð°Ð¼Ð¸
+	TestTryCatch("CANADAISACOUNTRYINNORTHAMERICA", 12);
+	cout << "------------------------------" << endl;
+	TestTryCatch("", 4);							// ÐžÑˆÐ¸Ð±ÐºÐ°: ÐŸÑƒÑÑ‚Ð°Ñ ÑÑ‚Ñ€Ð¾ÐºÐ°
+	TestTryCatch("!@#$123456789X", 4);				// ÐžÑˆÐ¸Ð±ÐºÐ°: ÐÐµÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ñ‹Ðµ ÑÐ¸Ð¼Ð²Ð¾Ð»Ñ‹ Ð² ÑÑ‚Ñ€Ð¾ÐºÐµ
+	TestTryCatch("johntravolta", 5);				// ÐžÑˆÐ¸Ð±ÐºÐ°: Ð¡Ð¸Ð¼Ð²Ð¾Ð» Ð² Ð½Ð¸Ð¶Ð½ÐµÐ¼ Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ðµ
+	TestTryCatch("123456789X", 1);					// ÐžÑˆÐ¸Ð±ÐºÐ°: Ð¡Ð»Ð¸ÑˆÐºÐ¾Ð¼ Ð¼Ð°Ð»ÐµÐ½ÑŒÐºÐ¸Ð¹ ÐºÐ»ÑŽÑ‡
+	TestTryCatch("123", 4);							// ÐžÑˆÐ¸Ð±ÐºÐ°: ÐœÐ°Ð»ÐµÐ½ÑŒÐºÐ°Ñ ÑÑ‚Ñ€Ð¾ÐºÐ° Ð¿Ð¾ ÑÑ€Ð°Ð²Ð½ÐµÐ½Ð¸ÑŽ Ñ ÐºÐ»ÑŽÑ‡ÐµÐ¼
 	return 0;
 }

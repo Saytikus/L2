@@ -4,25 +4,18 @@ using namespace std;
 void check(const wstring& Text, const wstring& key, bool destructCipherText = false) {
 	wstring cipherText;
 	wstring decryptedText;
-	wstring TempText;
 	try {
 		modAlphaCipher cipher(key);
 		cipherText = cipher.encrypt(Text);
-		decryptedText = cipher.decrypt(cipherText);
-		for (auto& z : Text) {
-			if (z >= L'�' && z <= L'�')
-				TempText += towupper(z);
-			else
-				TempText = Text;
-		}
+		if(destructCipherText)
+			decryptedText = cipher.decrypt(L"маленькиесимволы");
+		else
+			decryptedText = cipher.decrypt(cipherText);
 		wcout << L"key=" << key << endl;
-		wcout << TempText << endl;
+		wcout << Text << endl;
 		wcout << cipherText << endl;
 		wcout << decryptedText << endl;
-		if (TempText == decryptedText)
-			wcout << L"Ok\n\n";
-		else
-			wcout << L"Err\n\n";
+		wcout << endl;
 	}
 	catch (const cipher_error& e) {
 		cerr << "Error: " << e.what() << endl;
@@ -33,12 +26,14 @@ int main()
 {
 	locale loc("ru_RU.UTF-8");
 	locale::global(loc);
+	check(L"УЛУКУМОРЬЯДУБЗЕЛЕНЫЙ", L"зеленый");
+	check(L"КанадаэтостранавСевернойАмерике", L"УЭЛЬС"); // Блок верных строк и ключей
+	check(L"смешалисьвкучуконилюди", L"ЛЕРМОНТОВ");
 
-	check(L"��������������������", L"�������");
-	check(L"��������������������51372", L"�������");
-	check(L"��������������������", L"626�������");
-	check(L"", L"�������");
-	check(L"��������������������", L"");
-
+	check(L"УЛУКОМОРЬЯДУБЗЕЛЕНЫЙ51372", L"ЗЕЛЕНЫЙ");		// Ошибка: некорректная строка с текстком
+	check(L"УЛУКОМОРЬЯДУБЗЕЛЕНЫЙ", L"123ЗЕЛЕНЫЙ");			// Ошибка: некорректный ключ
+	check(L"", L"ЗЕЛЕНЫЙ");									// Ошибка: пустая строка текста
+	check(L"УЛУКОМОРЬЯДУБЗЕЛЕНЫЙ", L"");					// Ошибка: пустой ключ
+	check(L"УЛУКОМОРЬЯДУБЗЕЛЕНЫЙ", L"УЭЛЬС", true);			// Ошибка: испорченный зашифрованный текст
 	return 0;
 }
