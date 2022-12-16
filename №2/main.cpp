@@ -5,10 +5,10 @@ using namespace std;
 			Methods head;
 			string encrypted_text = head.Encrypt(text, key);
 			string decrypted_text = head.Decrypt(encrypted_text, key);
-			cout << text << endl << encrypted_text << endl << decrypted_text << endl;
+			cout << text << endl << encrypted_text << endl << decrypted_text << "\n\n";
 		}
 		catch (const Mymethods_error& er) {
-			cerr << "Error: " << er.what() << endl;
+			cerr << "[" << er.what() << "]" << " with string: " << text << " and key: " << key << endl;
 		}
 }
 

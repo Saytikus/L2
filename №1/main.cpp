@@ -18,7 +18,8 @@ void check(const wstring& Text, const wstring& key, bool destructCipherText = fa
 		wcout << endl;
 	}
 	catch (const cipher_error& e) {
-		cerr << "Error: " << e.what() << endl;
+		cerr << "[" << e.what() << "]" << " with string: ";
+		wcout << Text << " and key: " << key << endl;
 	}
 }
 
